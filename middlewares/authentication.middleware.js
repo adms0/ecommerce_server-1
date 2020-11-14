@@ -4,13 +4,13 @@ const { User } = require("../models/index")
 async function authentication(req, res, next) {
 
     try {
-        const { access_token } = req.headers
-        console.log(access_token, "<<<< access_token di authentication");
+        const { token } = req.headers
+        console.log(token, "<<<< token di authentication");
 
-        if (!access_token) {
+        if (!token) {
             throw { name: "Authentication failed" }
         } else {
-            let decoded = verifyToken(access_token)
+            let decoded = verifyToken(token)
             const user = await User.findOne({
                 where: {
                     email: decoded.email
@@ -21,7 +21,7 @@ async function authentication(req, res, next) {
                 throw { name: "Authentication failed" }
             } else {
                 console.log(req.loggedInUser, "<<<< loggedInUser");
-                req.loggedInUser = decoded;
+                req.loggedInUser = user;
                 next()
                 console.log(req.loggedInUser, "<<<< loggedInUser");
             }

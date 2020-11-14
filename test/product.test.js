@@ -45,7 +45,7 @@ describe("Create Product / Success case", () => {
     test("Should send object with keys: id, name, image_url, price, stock", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send(data_product)
             .end((err, res) => {
                 if (err) throw err
@@ -64,7 +64,7 @@ describe("Create Product / Success case", () => {
     test("Failed because of image validation error", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "kacrut",
                 image_url: "",
@@ -85,7 +85,7 @@ describe("Create Product / Success case", () => {
     test("Failed because of image does not in url format", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "kacrut",
                 image_url: "google",
@@ -106,7 +106,7 @@ describe("Create Product / Success case", () => {
     test("Failed because of name validation error", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "",
                 image_url: "www.google.com",
@@ -127,7 +127,7 @@ describe("Create Product / Success case", () => {
     test("Failed because of price validation error", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "kacrut",
                 image_url: "www.google.com",
@@ -147,7 +147,7 @@ describe("Create Product / Success case", () => {
     test("Failed because of product prive null", (done) => {
         request(app)
             .post("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "kacrut",
                 image_url: "www.google.com",
@@ -193,7 +193,7 @@ describe("Find product / get all product case", () => {
     test("Send params id", (done) => {
         request(app)
             .get("/products")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .end((err, res) => {
                 if (err) throw err
                 else {
@@ -215,7 +215,7 @@ describe("Edit Product / success case ", () => {
     test("Should send object with keys: name, image_url, price, stock", (done) => {
         request(app)
             .put("/products/3")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .send({
                 name: "kacrut",
                 image_url: "www.google.com",
@@ -243,7 +243,7 @@ describe("Delete Product / success case", () => {
     test("Should send params id", (done) => {
         request(app)
             .delete("/products/3")
-            .set("access_token", initial_token)
+            .set("token", initial_token)
             .end((err, res) => {
                 console.log(res.body, "<<<< res body");
                 if (err) throw err

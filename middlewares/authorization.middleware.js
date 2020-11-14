@@ -4,12 +4,16 @@ async function authorization(req, res, next) {
 
     try {
 
+        console.log(req.loggedInUser.id, "<<<< req.loggedInUser");
+        // const user = await User.findOne({
+        //     where: { email: req.loggedInUser.email }
+        // })
         const user = await User.findByPk(req.loggedInUser.id)
         console.log(user, "<<< user authorization");
         if (user.role === 'admin') {
             next()
         } else {
-            throw { message: "Not authorize" }
+            throw { name: "Not authorize" }
         }
 
     } catch (err) {

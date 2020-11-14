@@ -27,7 +27,7 @@ let user = {
 }
 
 describe("Test End Point /login ", () => {
-    test("Should send an object with keys: access_token, email, password, role", (done) => {
+    test("Should send an object with keys: token, email, password, role", (done) => {
         request(app)
             .post("/login")
             .send(user)
@@ -35,7 +35,7 @@ describe("Test End Point /login ", () => {
                 if (err) throw err;
                 else {
                     expect(res.status).toBe(200);
-                    expect(res.body).toHaveProperty("access_token", expect.any(String))
+                    expect(res.body).toHaveProperty("token", expect.any(String))
                     done()
                 }
 

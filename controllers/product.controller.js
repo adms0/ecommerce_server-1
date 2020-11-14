@@ -13,6 +13,7 @@ class ProductController {
             res.status(201).json(product)
         } catch (err) {
             next(err)
+            console.log(err, "<<< error create")
         }
     }
 

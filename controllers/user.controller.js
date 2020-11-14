@@ -43,9 +43,9 @@ class UserController {
             } else if (!comparePassword(payload.password, user.password)) {
                 throw { name: "wrong email/password" }
             } else {
-                const access_token = signToken(payload)
+                const token = signToken(payload)
                 res.status(200).json({
-                    access_token
+                    token
                 })
             }
         } catch (err) {

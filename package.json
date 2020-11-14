@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand --verbose",
-    "start": "node bin/http", 
-    "dev" : "nodemon bin/http"
+    "start": "node bin/http",
+    "dev": "nodemon bin/http"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/adms0/ecommerce_server-1#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.0",
