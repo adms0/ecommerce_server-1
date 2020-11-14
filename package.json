@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand --verbose",
-    "start": "node bin/http",
+    "start": "node app.js",
     "dev": "nodemon bin/http"
   },
   "repository": {
