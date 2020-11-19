@@ -22,6 +22,10 @@ function errorHandler(err, req, res, next) {
             error = "Authentication failed",
                 status = 400
             break;
+        case 'email already registered': 
+            error = 'email already registered',
+            status = 401
+            break;
         default:
             error = "internal server error",
                 status = 500

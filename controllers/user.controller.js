@@ -10,14 +10,24 @@ class UserController {
                 password: req.body.password,
                 role: req.body.role
             }
-            const user = await User.create(payload)
-            res.status(201).json({
-                message: "user success to register",
-                'status-code': 201,
-                id: user.id,
-                email: user.email,
-                role: user.role
+            const emailUnique = await User.findOne({
+                where: {
+                    email : payload.email
+                }
             })
+
+            if (emailUnique) {
+                throw { name: 'email already registered', status: 401 }
+            } else {
+                const user = await User.create(payload)
+                res.status(201).json({
+                    message: "user success to register",
+                    'status-code': 201,
+                    id: user.id,
+                    email: user.email,
+                    role: user.role
+                })
+            }
         } catch (err) {
             next(err)
         }
@@ -35,7 +45,6 @@ class UserController {
             const user = await User.findOne({
                 where: { email: payload.email }
             })
-            console.log(user, "<<<< ussr login controller");
 
             if (!user) {
                 throw { name: "wrong email/password" }

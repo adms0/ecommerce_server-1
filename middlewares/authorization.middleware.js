@@ -1,27 +1,50 @@
-const { User } = require("../models/index")
+const { User, Cart } = require("../models/index")
 
-async function authorization(req, res, next) {
+class Authorization {
 
-    try {
+    static async authorizationUser(req, res, next) {
 
-        console.log(req.loggedInUser.id, "<<<< req.loggedInUser");
-        // const user = await User.findOne({
-        //     where: { email: req.loggedInUser.email }
-        // })
-        const user = await User.findByPk(req.loggedInUser.id)
-        console.log(user, "<<< user authorization");
-        if (user.role === 'admin') {
-            next()
-        } else {
-            throw { name: "Not authorize" }
+        try {
+
+            // const user = await User.findOne({
+            //     where: { email: req.loggedInUser.email }
+            // })
+            const user = await User.findByPk(req.loggedInUser.id)
+            console.log(user, '<<< user authorizations');
+            if (user.role === 'admin') {
+                next()
+            } else {
+                throw { name: "Not authorize" }
+            }
+
+        } catch (err) {
+            next(err)
         }
-
-    } catch (err) {
-        next(err)
     }
 
+    static async cartAuthorization(req, res, next) {
 
+        try {
+
+            const { id } = req.params
+            console.log(id, '<<<< id params');
+            const cart = await Cart.findOne({
+                where : { id}
+            })
+            console.log(cart, '<<<< cart');
+            if (cart.UserId == req.loggedInUser.id) {
+                next()
+            } else {
+                throw { name: 'Not authorize' }
+            }
+        } catch (err) {
+            next(err)
+
+        }
+    }
 
 }
 
-module.exports = authorization
+
+
+module.exports = Authorization 
