@@ -61,7 +61,7 @@ describe('Product Routes Test', () => {
                         expect(res.body).toHaveProperty('id', expect.any(Number))
                         expect(res.body).toHaveProperty('image_url', 'https://ecs7-p.tokopedia.net/img/cache/200-square/product-1/2017/3/17/1759092/1759092_07d8cd0e-51a2-4916-90fa-d5a335c23a00.jpg')
                         expect(res.body).toHaveProperty('price', 9),
-                            expect(res.body).toHaveProperty('stock', 10)
+                        expect(res.body).toHaveProperty('stock', 10)
                         done()
                     }
                 })

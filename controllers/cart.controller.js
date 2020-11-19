@@ -9,7 +9,7 @@ class CartController {
             let cart = await Cart.findAll({
                 where: {
                     UserId: id
-                }, include : ['Product'],
+                }, include: ['Product'],
                 attributes: ['id', 'quantity', 'status']
             })
             console.log(cart, '<<< cart');
@@ -30,7 +30,7 @@ class CartController {
             const cart = await Cart.findOne({
                 where: {
                     UserId, ProductId, status: false
-                }, 
+                },
                 attributes: ['quantity', 'id']
             })
             console.log(cart, '<<< cart id');
@@ -66,7 +66,7 @@ class CartController {
             const countQuantity = await Cart.update({ quantity }, {
                 where: {
                     id
-                }, 
+                },
             })
             console.log(countQuantity, '<<<< countQuantity');
 
@@ -89,6 +89,48 @@ class CartController {
             next(err)
         }
     }
+
+    static async checkout(req, res, next) {
+
+        try {
+            
+            const status = true
+            const carts = await Cart.findAll({ 
+                where: { 
+                    UserId : req.loggedInUser.id, 
+                    status: false
+                }, 
+                include: ['Product']
+            })
+            carts.map(el => { 
+                console.log(el, '<<< el carts');
+                let newStock = el.Product.stock - el.quantity
+                Product.update({ 
+                    stock: newStock
+                }, { 
+                    where : { 
+                        id : el.ProductId
+                    }
+                }).then(() => { 
+                    return el
+                }).cath(err =>{ 
+                    console.log(err);
+                })
+
+            })
+            await Cart.update({ 
+                status
+            }, { 
+                where : { 
+                    UserId: req.loggedInUser.id
+                }
+            })
+            res.status(200).json({message : 'Checkout success'})
+        } catch (err) { 
+            next (err)
+        }
+    }
+
 
 }
 
